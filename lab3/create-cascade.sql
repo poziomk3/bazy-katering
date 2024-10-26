@@ -183,7 +183,7 @@ CREATE TABLE daily_plan_meals (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_meal_id) REFERENCES meals(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id) ON DELETE CASCADE
 );
 
 CREATE TABLE subscription_daily_plans (
