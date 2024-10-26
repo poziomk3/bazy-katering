@@ -101,7 +101,7 @@ INSERT INTO daily_plans (date) VALUES
 (CURRENT_DATE + INTERVAL '2 days');
 
 -- Insert into daily_plan_meals
-INSERT INTO daily_plan_meals (fk_meal_id, fk_diet_type_id) VALUES
+INSERT INTO daily_plan_meals (fk_meal_id, fk_daily_plan_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3);

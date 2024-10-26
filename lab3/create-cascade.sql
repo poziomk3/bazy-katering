@@ -45,7 +45,7 @@ CREATE TABLE addresses (
 CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
     fk_user_id INTEGER NOT NULL,
-    fk_address_id INTEGER NOT NULL,
+    fk_address_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
@@ -72,8 +72,8 @@ CREATE TABLE subscription_states (
 CREATE TABLE subscriptions (
     id SERIAL PRIMARY KEY,
     fk_customer_id INTEGER NOT NULL,
-    fk_diet_type_id INTEGER NOT NULL,
-    fk_status_id INTEGER NOT NULL,
+    fk_diet_type_id INTEGER ,
+    fk_status_id INTEGER ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
@@ -86,7 +86,7 @@ CREATE TABLE deliveries (
     id SERIAL PRIMARY KEY,
     date TIMESTAMP NOT NULL CHECK (date >= CURRENT_DATE),
     fk_subscription_id INTEGER NOT NULL,
-    fk_employee_id INTEGER NOT NULL,
+    fk_employee_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
@@ -118,7 +118,7 @@ CREATE TABLE ingredients (
     protein NUMERIC CHECK (protein >= 0 AND protein <= 100),
     carbohydrates NUMERIC CHECK (carbohydrates >= 0 AND carbohydrates <= 100),
     sugar NUMERIC CHECK (sugar >= 0 AND sugar <= carbohydrates),
-    fk_ingredient_category_id INTEGER NOT NULL,
+    fk_ingredient_category_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
@@ -133,7 +133,7 @@ CREATE TABLE ingredient_allergens (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_allergen_id) REFERENCES allergens(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_allergen_id) REFERENCES allergens(id) ON DELETE CASCADE
 );
 
 CREATE TABLE meal_categories (
@@ -146,9 +146,9 @@ CREATE TABLE meal_categories (
 
 CREATE TABLE meals (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL CHECK  (name ~* '^[A-Za-z ]+$'),
-    fk_meal_category_id INTEGER NOT NULL,
-    fk_diet_type_id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL CHECK (name ~* '^[A-Za-z ]+$'),
+    fk_meal_category_id INTEGER,
+    fk_diet_type_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
@@ -164,7 +164,7 @@ CREATE TABLE meal_ingredients (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_meal_id) REFERENCES meals(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_ingredient_id) REFERENCES ingredients(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
 );
 
 CREATE TABLE daily_plans (
@@ -177,13 +177,13 @@ CREATE TABLE daily_plans (
 
 CREATE TABLE daily_plan_meals (
     id SERIAL PRIMARY KEY,
+    fk_daily_plan_id INTEGER NOT NULL,
     fk_meal_id INTEGER NOT NULL,
-    fk_diet_type_id INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_meal_id) REFERENCES meals(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_diet_type_id) REFERENCES diet_types(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id) ON DELETE SET NULL
 );
 
 CREATE TABLE subscription_daily_plans (
@@ -194,5 +194,5 @@ CREATE TABLE subscription_daily_plans (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_subscription_id) REFERENCES subscriptions(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id) ON DELETE CASCADE
 );

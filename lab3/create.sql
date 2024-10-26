@@ -178,12 +178,13 @@ CREATE TABLE daily_plans (
 CREATE TABLE daily_plan_meals (
     id SERIAL PRIMARY KEY,
     fk_meal_id INTEGER NOT NULL,
+    fk_daily_plan_id INTEGER NOT NULL,
     fk_diet_type_id INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_meal_id) REFERENCES meals(id),
-    FOREIGN KEY (fk_diet_type_id) REFERENCES diet_types(id)
+    FOREIGN KEY (fk_daily_plan_id) REFERENCES daily_plans(id)
 );
 
 CREATE TABLE subscription_daily_plans (
