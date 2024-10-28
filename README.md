@@ -7,7 +7,7 @@ This project provides a PostgreSQL database and pgAdmin for managing the databas
 - Stąd można node i npm `https://docs.npmjs.com/downloading-and-installing-node-js-and-npm`
 
 
-## Co zrobić żeby działało
+## Co zrobić żeby działał projekt
 
 1. Clone the repository.
 2. Run the following command to start db and db-admin:
@@ -18,6 +18,12 @@ This project provides a PostgreSQL database and pgAdmin for managing the databas
 ```
 npm i
 ```
+
+## UWAGA WAŻNE!
+Komenda odpala script, który mamy w lab4/seed.ts - to będzie entry point do seeedowania
+```
+  npm run seed
+  ```
 
 ## Database Management
 

@@ -34,7 +34,7 @@ CREATE TABLE addresses (
     building_number INTEGER NOT NULL CHECK (building_number > 0),
     flat_number INTEGER CHECK (flat_number > 0),
     street VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL CHECK (city ~* '^[A-Za-z ]+$'),
+    city VARCHAR(255) NOT NULL,
     postcode VARCHAR(255) NOT NULL CHECK (postcode ~* '^[A-Za-z0-9 -]+$'),
     country VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
