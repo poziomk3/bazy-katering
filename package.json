@@ -1,14 +1,15 @@
 {
   "name": "bazy",
+  "type": "module",
   "version": "1.0.0",
   "description": "Bazy kateringowe",
   "main": "index.js",
   "scripts": {
-  "seed": "node seed.js",
-  "pull": "prisma db pull --schema=prisma/schema.prisma",
-  "migrate": "prisma migrate dev --schema=prisma/schema.prisma",
-  "generate": "prisma generate --schema=prisma/schema.prisma"
-},
+    "seed": "node lab4/seed.js",
+    "pull": "prisma db pull --schema=prisma/schema.prisma",
+    "migrate": "prisma migrate dev --schema=prisma/schema.prisma",
+    "generate": "prisma generate --schema=prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
