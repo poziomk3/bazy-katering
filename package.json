@@ -1,11 +1,11 @@
 {
   "name": "bazy",
-  "type": "module",
+  "type": "commonjs",
   "version": "1.0.0",
   "description": "Bazy kateringowe",
   "main": "index.js",
   "scripts": {
-    "seed": "node lab4/seed.js",
+    "seed": "tsc && node dist/seed.js",
     "pull": "prisma db pull --schema=prisma/schema.prisma",
     "migrate": "prisma migrate dev --schema=prisma/schema.prisma",
     "generate": "prisma generate --schema=prisma/schema.prisma"
@@ -16,6 +16,11 @@
   "dependencies": {
     "@prisma/client": "^5.21.1",
     "pg": "^8.13.1",
-    "prisma": "^5.21.1"
+    "prisma": "^5.21.1",
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.1.0",
+    "typescript": "^5.6.3"
   }
 }
