@@ -36,7 +36,7 @@ CREATE TABLE addresses (
     street VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL CHECK (city ~* '^[A-Za-z ]+$'),
     postcode VARCHAR(255) NOT NULL CHECK (postcode ~* '^[A-Za-z0-9 -]+$'),
-    country VARCHAR(255) NOT NULL CHECK (country IN ('Poland','Estonia')),
+    country VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at)
