@@ -26,7 +26,7 @@ CREATE TABLE employees (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE addresses (
