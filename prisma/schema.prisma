@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model addresses {
+  id              Int         @id @default(autoincrement())
+  building_number Int
+  flat_number     Int?
+  street          String      @db.VarChar(255)
+  city            String      @db.VarChar(255)
+  postcode        String      @db.VarChar(255)
+  country         String      @db.VarChar(255)
+  created_at      DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?   @default(now()) @db.Timestamp(6)
+  customers       customers[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model allergens {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  created_at           DateTime?              @default(now()) @db.Timestamp(6)
+  updated_at           DateTime?              @default(now()) @db.Timestamp(6)
+  ingredient_allergens ingredient_allergens[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customers {
+  id            Int             @id @default(autoincrement())
+  fk_user_id    Int
+  fk_address_id Int?
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  addresses     addresses?      @relation(fields: [fk_address_id], references: [id], onUpdate: NoAction)
+  users         users           @relation(fields: [fk_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  subscriptions subscriptions[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model daily_plan_meals {
+  id               Int         @id @default(autoincrement())
+  fk_daily_plan_id Int
+  fk_meal_id       Int
+  created_at       DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?   @default(now()) @db.Timestamp(6)
+  daily_plans      daily_plans @relation(fields: [fk_daily_plan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  meals            meals       @relation(fields: [fk_meal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model daily_plans {
+  id                       Int                        @id @default(autoincrement())
+  date                     DateTime                   @db.Date
+  created_at               DateTime?                  @default(now()) @db.Timestamp(6)
+  updated_at               DateTime?                  @default(now()) @db.Timestamp(6)
+  daily_plan_meals         daily_plan_meals[]
+  subscription_daily_plans subscription_daily_plans[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model deliveries {
+  id                 Int           @id @default(autoincrement())
+  date               DateTime      @db.Timestamp(6)
+  fk_subscription_id Int
+  fk_employee_id     Int?
+  created_at         DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?     @default(now()) @db.Timestamp(6)
+  employees          employees?    @relation(fields: [fk_employee_id], references: [fk_user_id], onUpdate: NoAction)
+  subscriptions      subscriptions @relation(fields: [fk_subscription_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model diet_types {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  meals         meals[]
+  subscriptions subscriptions[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model employees {
+  fk_user_id     Int          @id
+  fk_position_id Int
+  created_at     DateTime?    @default(now()) @db.Timestamp(6)
+  updated_at     DateTime?    @default(now()) @db.Timestamp(6)
+  deliveries     deliveries[]
+  positions      positions    @relation(fields: [fk_position_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users          users        @relation(fields: [fk_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model ingredient_allergens {
+  id               Int         @id @default(autoincrement())
+  fk_ingredient_id Int
+  fk_allergen_id   Int
+  created_at       DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?   @default(now()) @db.Timestamp(6)
+  allergens        allergens   @relation(fields: [fk_allergen_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  ingredients      ingredients @relation(fields: [fk_ingredient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model ingredients {
+  id                        Int                     @id @default(autoincrement())
+  name                      String                  @db.VarChar(255)
+  kilocalories              Decimal?                @db.Decimal
+  fat                       Decimal?                @db.Decimal
+  protein                   Decimal?                @db.Decimal
+  carbohydrates             Decimal?                @db.Decimal
+  sugar                     Decimal?                @db.Decimal
+  fk_ingredient_category_id Int?
+  created_at                DateTime?               @default(now()) @db.Timestamp(6)
+  updated_at                DateTime?               @default(now()) @db.Timestamp(6)
+  ingredient_allergens      ingredient_allergens[]
+  ingredients_categories    ingredients_categories? @relation(fields: [fk_ingredient_category_id], references: [id], onUpdate: NoAction)
+  meal_ingredients          meal_ingredients[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model ingredients_categories {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  created_at  DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at  DateTime?     @default(now()) @db.Timestamp(6)
+  ingredients ingredients[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meal_categories {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  meals      meals[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meal_ingredients {
+  id               Int         @id @default(autoincrement())
+  fk_meal_id       Int
+  fk_ingredient_id Int
+  created_at       DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?   @default(now()) @db.Timestamp(6)
+  ingredients      ingredients @relation(fields: [fk_ingredient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  meals            meals       @relation(fields: [fk_meal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meals {
+  id                  Int                @id @default(autoincrement())
+  name                String             @db.VarChar(255)
+  fk_meal_category_id Int?
+  fk_diet_type_id     Int?
+  created_at          DateTime?          @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?          @default(now()) @db.Timestamp(6)
+  daily_plan_meals    daily_plan_meals[]
+  meal_ingredients    meal_ingredients[]
+  diet_types          diet_types?        @relation(fields: [fk_diet_type_id], references: [id], onUpdate: NoAction)
+  meal_categories     meal_categories?   @relation(fields: [fk_meal_category_id], references: [id], onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model positions {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  created_at DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at DateTime?   @default(now()) @db.Timestamp(6)
+  employees  employees[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model subscription_daily_plans {
+  id                 Int           @id @default(autoincrement())
+  fk_subscription_id Int
+  fk_daily_plan_id   Int
+  created_at         DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?     @default(now()) @db.Timestamp(6)
+  daily_plans        daily_plans   @relation(fields: [fk_daily_plan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  subscriptions      subscriptions @relation(fields: [fk_subscription_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model subscription_states {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  subscriptions subscriptions[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model subscriptions {
+  id                       Int                        @id @default(autoincrement())
+  fk_customer_id           Int
+  fk_diet_type_id          Int?
+  fk_status_id             Int?
+  created_at               DateTime?                  @default(now()) @db.Timestamp(6)
+  updated_at               DateTime?                  @default(now()) @db.Timestamp(6)
+  deliveries               deliveries[]
+  subscription_daily_plans subscription_daily_plans[]
+  customers                customers                  @relation(fields: [fk_customer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  diet_types               diet_types?                @relation(fields: [fk_diet_type_id], references: [id], onUpdate: NoAction)
+  subscription_states      subscription_states?       @relation(fields: [fk_status_id], references: [id], onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique @db.VarChar(255)
+  password   String      @db.VarChar(255)
+  name       String      @db.VarChar(255)
+  surname    String      @db.VarChar(255)
+  created_at DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at DateTime?   @default(now()) @db.Timestamp(6)
+  customers  customers[]
+  employees  employees?
+}

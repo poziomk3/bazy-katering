@@ -26,7 +26,7 @@ CREATE TABLE employees (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE SET NULL
+    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE addresses (
@@ -34,9 +34,9 @@ CREATE TABLE addresses (
     building_number INTEGER NOT NULL CHECK (building_number > 0),
     flat_number INTEGER CHECK (flat_number > 0),
     street VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL CHECK (city ~* '^[A-Za-z ]+$'),
+    city VARCHAR(255) NOT NULL,
     postcode VARCHAR(255) NOT NULL CHECK (postcode ~* '^[A-Za-z0-9 -]+$'),
-    country VARCHAR(255) NOT NULL CHECK (country IN ('Poland','Estonia')),
+    country VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at)
