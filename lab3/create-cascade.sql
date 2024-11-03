@@ -21,14 +21,13 @@ CREATE TABLE users (
 
 CREATE TABLE employees (
     fk_user_id INTEGER PRIMARY KEY,
-    fk_position_id INTEGER NOT NULL,
+    fk_position_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (created_at <= updated_at),
     FOREIGN KEY (fk_user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE CASCADE
+    FOREIGN KEY (fk_position_id) REFERENCES positions(id) ON DELETE SET NULL
 );
-
 CREATE TABLE addresses (
     id SERIAL PRIMARY KEY,
     building_number INTEGER NOT NULL CHECK (building_number > 0),
@@ -112,7 +111,7 @@ CREATE TABLE ingredients_categories (
 
 CREATE TABLE ingredients (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL  CHECK (name ~* '^[A-Za-z ]+$'),
+    name VARCHAR(255) NOT NULL ,
     kilocalories NUMERIC CHECK (kilocalories >= 0),
     fat NUMERIC CHECK (fat >= 0 AND fat <= 100),
     protein NUMERIC CHECK (protein >= 0 AND protein <= 100),
@@ -146,7 +145,7 @@ CREATE TABLE meal_categories (
 
 CREATE TABLE meals (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL CHECK (name ~* '^[A-Za-z ]+$'),
+    name VARCHAR(255) NOT NULL,
     fk_meal_category_id INTEGER,
     fk_diet_type_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

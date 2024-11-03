@@ -4,12 +4,39 @@ import {
   insertPositions,
   insertRandomCustomersWithTheirAddresses,
 } from "./addPeople";
+import {
+  extractLinesFromBigAssDataFile,
+  extractUniqueIngredients,
+} from "./data/dataManipulation";
+import {
+  insertAllergens,
+  insertIngredientCategories,
+  insertIngredients,
+} from "./addIngredients";
+import { insertDietTypes, insertMealCategories, insertMeals } from "./addMeals";
+import { insertDailyPlans } from "./addDailyPlans";
+import {
+  insertSubscriptions,
+  insertSubscriptionStates,
+} from "./addSubscriptions";
 
 async function main() {
-  await insertPositions(prisma);
-  await insertRandomCustomersWithTheirAddresses(prisma, 100000);
-
+  //helpers for handling the big ass file
+  // extractLinesFromBigAssDataFile();
+  // extractUniqueIngredients();
+  //seeders
+  // await insertPositions(prisma);
+  // await insertRandomCustomersWithTheirAddresses(prisma, 200000);
+  // await insertAllergens(prisma);
+  // await insertIngredientCategories(prisma);
+  // await insertIngredients(prisma);
+  // await insertMealCategories(prisma);
+  // await insertDietTypes(prisma);
+  // await insertMeals(prisma);
+  // await insertDailyPlans(prisma, 5000);
+  // await insertSubscriptions(prisma, 10000);
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect();
