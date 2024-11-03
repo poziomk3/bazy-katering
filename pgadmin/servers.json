@@ -1,15 +1,15 @@
 {
-    "Servers": {
-      "1": {
-        "Name": "Postgres_DB",
-        "Group": "Servers",
-        "Host": "postgres",
-        "Port": 5432,
-        "Username": "user",
-        "Password": "password",
-        "SSLMode": "prefer",
-        "MaintenanceDB": "postgres",
-        "Comment": "Auto connection to PostgreSQL"
-      }
+  "Servers": {
+    "1": {
+      "Name": "Postgres_DB",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5200,
+      "Username": "user",
+      "Password": "password",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres",
+      "Comment": "Auto connection to PostgreSQL"
     }
   }
+}

@@ -145,7 +145,7 @@ CREATE TABLE meal_categories (
 
 CREATE TABLE meals (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL CHECK (name ~* '^[A-Za-z ]+$'),
+    name VARCHAR(255) NOT NULL,
     fk_meal_category_id INTEGER,
     fk_diet_type_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

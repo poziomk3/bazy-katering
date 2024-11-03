@@ -13,7 +13,7 @@ export const createRandomAddress = () => {
     street: faker.location.street(),
     city: faker.location.city(),
     postcode: faker.location.zipCode(),
-    country:"Poland",
+    country: "Poland",
     // country: faker.location.country(),
     building_number: parseInt(faker.location.buildingNumber(), 10),
     flat_number:
