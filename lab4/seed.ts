@@ -34,6 +34,7 @@ async function main() {
   // await insertDietTypes(prisma);
   // await insertMeals(prisma);
   // await insertDailyPlans(prisma, 5000);
+  // await insertSubscriptionStates(prisma)
   // await insertSubscriptions(prisma, 10000);
 }
 
