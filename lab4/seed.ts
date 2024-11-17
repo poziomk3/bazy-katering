@@ -20,6 +20,7 @@ import {
   insertSubscriptionStates,
 } from "./addSubscriptions";
 
+
 async function main() {
   //helpers for handling the big ass file
   // extractLinesFromBigAssDataFile();
@@ -34,7 +35,7 @@ async function main() {
   // await insertDietTypes(prisma);
   // await insertMeals(prisma);
   // await insertDailyPlans(prisma, 5000);
-  // await insertSubscriptionStates(prisma)
+  // await insertSubscriptionStates(prisma);
   // await insertSubscriptions(prisma, 10000);
 }
 
