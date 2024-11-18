@@ -2,8 +2,8 @@ import { faker } from "@faker-js/faker";
 import { v4 as uuid } from "uuid";
 export const createRandomUser = () => {
   return {
-    name: faker.person.lastName(),
-    surname: faker.person.firstName(),
+    name: faker.person.firstName(),
+    surname: faker.person.lastName(),
     password: uuid(),
   };
 };

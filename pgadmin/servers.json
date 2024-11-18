@@ -4,7 +4,7 @@
       "Name": "Postgres_DB",
       "Group": "Servers",
       "Host": "postgres",
-      "Port": 5200,
+      "Port": 5432,
       "Username": "user",
       "Password": "password",
       "SSLMode": "prefer",
