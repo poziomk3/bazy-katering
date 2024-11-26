@@ -1,0 +1,6 @@
+idx_subscriptions_fk_status_id;
+idx_deliveries_fk_employee_id;
+idx_group_by_fk_user_id;
+idx_employees_fk_position_id;
+idx_deliveries_date_trunc_day;
+idx_test_users_id_name_surname

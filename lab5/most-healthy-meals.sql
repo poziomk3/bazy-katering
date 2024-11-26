@@ -5,10 +5,10 @@ SELECT
         POWER(SUM(i.protein), 2) / NULLIF(SUM(i.fat + i.sugar + i.carbohydrates), 0),
         2
     ) AS healthiness_score,
-    SUM(i.fat) AS total_fat,
-    SUM(i.sugar) AS total_sugar,
-    SUM(i.protein) AS total_protein,
-    SUM(i.carbohydrates) AS total_carbohydrates
+    ROUND(SUM(i.fat), 2) AS total_fat,
+    ROUND(SUM(i.sugar), 2) AS total_sugar,
+    ROUND(SUM(i.protein),2) AS total_protein,
+    ROUND(SUM(i.carbohydrates), 2) AS total_carbohydrates
 FROM 
     meals m
 LEFT JOIN 
