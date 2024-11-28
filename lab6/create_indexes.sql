@@ -9,3 +9,4 @@ CREATE INDEX idx_deliveries_subscription_date ON deliveries (fk_subscription_id,
 CREATE INDEX idx_deliveries_fk_subscription_id ON deliveries (fk_subscription_id);
 CREATE INDEX idx_test_users_id_name_surname ON users (id, name, surname);
 CREATE INDEX idx_subscriptions_active_created_at ON subscriptions(created_at) WHERE fk_status_id = 1;
+CREATE INDEX idx_meals_vegetarian ON meals(id) WHERE fk_diet_type_id = 1;
