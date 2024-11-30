@@ -1,37 +1,54 @@
-version: '3.8'
-
 services:
-  postgres:
+  postgres1:
     image: postgres:13
-    container_name: postgres_db
+    container_name: postgres_db_1
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - /var/lib/postgresql/data # Anonymous volume, no data persistence after container removal
+      POSTGRES_PASSWORD: password
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
     networks:
       - postgres_network
+    volumes:
+      - postgres1_data:/var/lib/postgresql/data
+      - ./backup_utf8.sql:/docker-entrypoint-initdb.d/backup.sql
+
+  postgres2:
+    image: postgres:13
+    container_name: postgres_db_2
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres_network
+    volumes:
+      - postgres2_data:/var/lib/postgresql/data
+      - ./backup_utf8.sql:/docker-entrypoint-initdb.d/backup.sql
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - ./pgadmin/servers.json:/pgadmin4/servers.json
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "${PGADMIN_PORT}:80"
+      - "8080:80"
     networks:
       - postgres_network
     depends_on:
-      - postgres
+      - postgres1
+      - postgres2
+    volumes:
+      - ./pgadmin4/servers.json:/pgadmin4/servers.json
 
 networks:
   postgres_network:
+    name: postgres_network # Explicitly set the network name
     driver: bridge
+
+volumes:
+  postgres1_data:
+  postgres2_data:

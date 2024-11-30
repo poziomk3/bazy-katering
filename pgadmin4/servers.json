@@ -1,0 +1,26 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Postgres_DB1",
+      "Group": "Servers",
+      "Host": "postgres1",
+      "Port": 5432,
+      "Username": "postgres",
+      "Password": "password",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "mydb1",
+      "Comment": "Connection to PostgreSQL instance 1"
+    },
+    "2": {
+      "Name": "Postgres_DB2",
+      "Group": "Servers",
+      "Host": "postgres2",
+      "Port": 5432,
+      "Username": "postgres",
+      "Password": "password",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "mydb2",
+      "Comment": "Connection to PostgreSQL instance 2"
+    }
+  }
+}
