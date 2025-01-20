@@ -1,0 +1,20 @@
+{
+  "name": "mongo",
+  "version": "1.0.0",
+  "description": "1. Odpalić dockera\r 2. komendy do odpalenia nowej bazki",
+  "main": "seed.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node seed.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.4.0",
+    "mongodb": "^6.12.0"
+  },
+  "devDependencies": {
+    "@types/faker": "^6.6.8"
+  }
+}
