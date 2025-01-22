@@ -75,7 +75,6 @@ const generateSubscriptions = (users, meals, employees) => {
       customer: {
         customer_id: new ObjectId(customer._id),
         customer_name: customer.name,
-        customer_surname: customer.surname,
       },
       diet_type: dietType,
       daily_plans: dailyPlans,
