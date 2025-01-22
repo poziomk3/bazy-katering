@@ -1,4 +1,8 @@
-# To jest entrypoint do wszystkich komend w poniższym README aka musicie mieć w konsoli .../mongo żeby poniższe działało
+# To jest entrypoint do wszystkich komend w poniższym README aka musicie mieć w konsoli .../mongo żeby poniższe działało. Czyli:
+
+```
+cd mongo
+```
 
 ## Obsługa kontera mongo
 
@@ -21,6 +25,7 @@ mongodb://admin:password@localhost:27017/
 
 5. Seedowanie
    - Wpisać komendy:
+
 ````npm i
     npm run seed```
 ````

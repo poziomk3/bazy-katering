@@ -47,7 +47,7 @@ const generateUsers = (totalUsers, employeeRatio, onUserCreated = () => {}) => {
 const seedUsers = async (db) => {
   console.log("🌱 Seeding users...");
   await db.collection("users").deleteMany({});
-  const users = generateUsers(100, 0.1, (user) =>
+  const users = generateUsers(10000, 0.1, (user) =>
     console.log(
       "Here you can add function that creates record for given user (customer or employee)",
       JSON.stringify(user),
