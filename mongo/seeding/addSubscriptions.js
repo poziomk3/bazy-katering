@@ -78,7 +78,9 @@ const generateSubscriptions = (users, meals, employees) => {
       },
       diet_type: dietType,
       daily_plans: dailyPlans,
-      state: faker.helpers.arrayElement(["active", "inactive", "paused"]),
+      state: faker.helpers.arrayElement(["active", "inactive", "paused", "canceled"]),
+      created_at: { $date: new Date().toISOString() },
+      updated_at: { $date: new Date().toISOString() },
     });
   }
 
